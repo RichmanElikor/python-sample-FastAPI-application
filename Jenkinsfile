@@ -1,27 +1,29 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    DOCKER_HUB_REPO = 'RichmanElikor/fastapi'
-  }
+    environment {
+        DOCKER_HUB_REPO = 'richmanelikor/fastapi'
+    }
 
-  stage{
-    stage('Checkout'){
-      steps{
-        git branch: 'main', url: 'https://github.com/RichmanElikor/python-sample-FastAPI-application/actions'
-      }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/RichmanElikor/python-sample-FastAPI-application.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t ${DOCKER_HUB_REPO}:latest .'
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                withDockerRegistry([ credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/' ]) {
+                    sh 'docker push ${DOCKER_HUB_REPO}:latest'
+                }
+            }
+        }
     }
-    stage('Build Docker Image'){
-      steps{
-        sh 'docker build -t ${DOCKER_HUB_REPO}:latest .'
-      }
-    }
-    stage('Push Docker image'){
-      steps{
-        withDockerRegistry([ credentialsId: 'dockerhub', url: '' ]) {
-          sh 'docker push ${DOCKER_HUB_REPO}:latest'
-      }
-    }
-    }
-    }
-  }
+}
