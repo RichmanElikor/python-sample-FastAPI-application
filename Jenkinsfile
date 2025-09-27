@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/RichmanElikor/python-sample-FastAPI-application.git'
+                git branch: 'master', url: 'https://github.com/RichmanElikor/python-sample-FastAPI-application.git'
             }
         }
 
