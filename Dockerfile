@@ -4,8 +4,10 @@ FROM python:3.10.12
 WORKDIR /app
 # Copy the files into the directory in the container 
 COPY . /app
+#Update pip to latest version
+RUN pip install --upgrade pip
 # Install any needed packages for the application to run 
-RUN pip install pipenv 
+RUN pip install pipenv --default-timeout=100 --retries=5
 # Copy the `Pipfile` and `Pipfile.lock` into the container at `/app`
 COPY Pipfile Pipfile.lock /app/
 # Install dependencies 
