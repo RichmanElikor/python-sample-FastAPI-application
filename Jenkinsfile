@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_REPO = 'richmanelikor/fastapi'
+        DOCKER_HUB_REPO = 'richman100/fastapi'
     }
 
     stages {
